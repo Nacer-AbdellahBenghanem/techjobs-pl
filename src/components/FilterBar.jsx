@@ -1,4 +1,11 @@
-function FilterBar({ searchTerm, setSearchTerm, workType, setWorkType }) {
+function FilterBar({
+  searchTerm,
+  setSearchTerm,
+  workType,
+  setWorkType,
+  city,
+  setCity,
+}) {
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row gap-4">
       {/* 1. Search Input */}
@@ -6,19 +13,31 @@ function FilterBar({ searchTerm, setSearchTerm, workType, setWorkType }) {
         <input
           type="text"
           placeholder="Search jobs by title or company..."
-          className="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800"
           value={searchTerm}
-          // When the user types, we update the search state instantly
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
-      {/* 2. Work Type Dropdown */}
+      {/* 2. City Dropdown */}
       <div className="md:w-48">
         <select
-          className="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          className="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-800"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        >
+          <option value="All">All Cities</option>
+          <option value="Warsaw">Warsaw</option>
+          <option value="Kraków">Kraków</option>
+          <option value="Wrocław">Wrocław</option>
+        </select>
+      </div>
+
+      {/* 3. Work Type Dropdown */}
+      <div className="md:w-48">
+        <select
+          className="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-800"
           value={workType}
-          // When the user picks an option, we update the workType state
           onChange={(e) => setWorkType(e.target.value)}
         >
           <option value="All">All Work Types</option>

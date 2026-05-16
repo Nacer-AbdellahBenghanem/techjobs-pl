@@ -11,22 +11,24 @@ function JobCard({ job }) {
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-xl font-bold text-slate-800">{job.title}</h2>
-          <p className="text-blue-600 font-medium">{job.company}</p>
+          <p className="text-blue-600 font-medium">
+            {job.company} •{" "}
+            <span className="text-slate-500 font-normal">{job.city}</span>
+          </p>
         </div>
         <span className="bg-green-100 text-green-700 text-sm font-bold px-3 py-1 rounded-full">
           {job.salary}
         </span>
       </div>
 
-      <div className="mt-4 flex items-center gap-2">
-        {/* We use the function here for dynamic colors */}
+      {/* This container now wraps tags cleanly on small screens */}
+      <div className="mt-4 flex flex-wrap items-center gap-2">
         <span
           className={`text-xs font-bold px-2 py-1 rounded ${getWorkTypeBadge(job.workType)}`}
         >
           {job.workType}
         </span>
 
-        {/* This loops through our tags (React, HTML, etc.) */}
         {job.tags.map((tag) => (
           <span
             key={tag}
