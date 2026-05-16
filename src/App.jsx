@@ -1,4 +1,6 @@
+import { useState } from "react"; // 1. Import the hook
 import JobCard from "./components/JobCard";
+import FilterBar from "./components/FilterBar";
 
 // 1. We create our array of fake data here
 const JOBS_DATA = [
@@ -26,13 +28,46 @@ const JOBS_DATA = [
     tags: ["Node.js", "React"],
     workType: "On-site",
   },
+  {
+    id: 4,
+    title: "Backend Engineer",
+    company: "Allegro",
+    salary: "12,000 - 18,000 PLN",
+    tags: ["Node.js", "PostgreSQL"],
+    workType: "Hybrid",
+  },
+  {
+    id: 5,
+    title: "Senior Fullstack Dev",
+    company: "TechSolutions",
+    salary: "18,000 - 24,000 PLN",
+    tags: ["React", "Node.js", "AWS"],
+    workType: "Remote",
+  },
 ];
 
 function App() {
+  // 2. Initialize our State
+  const [searchTerm, setSearchTerm] = useState("");
+  const [workType, setWorkType] = useState("All");
+
+  // 3. The Core Logic: The Array .filter() method
+  // This runs automatically every time the user types or clicks a dropdown!
+  const filteredJobs = JOBS_DATA.filter((job) => {
+    // Does the job title or company contain the search letters? (toLowerCase makes it case-insensitive)
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchTerm.toLowerCase());
+
+    // Does the job's work type match the dropdown? (Or is the dropdown set to "All"?)
+    const matchesType = workType === "All" || job.workType === workType;
+
+    return matchesSearch && matchesType;
+  });
+
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8">
       <div className="max-w-2xl mx-auto">
-        {/* 2. This is the new header */}
         <header className="mb-10 text-center">
           <h1 className="text-4xl font-black text-slate-900 tracking-tight">
             TechJobs <span className="text-blue-600">PL</span>
@@ -42,11 +77,43 @@ function App() {
           </p>
         </header>
 
-        {/* 3. This maps over our array and creates a card for each job */}
+        {/* 4. Pass our state into the FilterBar component */}
+        <FilterBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          workType={workType}
+          setWorkType={setWorkType}
+        />
+
+        {/* The Results Count (Senior Dev touch) */}
+        <div className="mb-4 text-slate-500 font-medium">
+          Found {filteredJobs.length}{" "}
+          {filteredJobs.length === 1 ? "job" : "jobs"}
+        </div>
+
         <div className="space-y-4">
-          {JOBS_DATA.map((jobItem) => (
-            <JobCard job={jobItem} key={jobItem.id} />
-          ))}
+          {/* 5. The Empty State (Senior Dev touch) */}
+          {filteredJobs.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-xl border border-slate-200 border-dashed">
+              <p className="text-slate-500 text-lg">
+                No jobs match your search criteria.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setWorkType("All");
+                }}
+                className="mt-4 text-blue-600 font-semibold hover:underline"
+              >
+                Clear all filters
+              </button>
+            </div>
+          ) : (
+            // 6. Map over the FILTERED array, not the main array
+            filteredJobs.map((jobItem) => (
+              <JobCard job={jobItem} key={jobItem.id} />
+            ))
+          )}
         </div>
       </div>
     </div>
