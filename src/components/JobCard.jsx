@@ -39,9 +39,14 @@ function JobCard({ job }) {
         ))}
       </div>
 
-      <button className="w-full mt-6 bg-slate-900 text-white py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors">
+      <a
+        href={job.url || "https://nofluffjobs.com"}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full mt-6 inline-block text-center bg-slate-900 text-white py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors"
+      >
         View Job
-      </button>
+      </a>
     </div>
   );
 }
