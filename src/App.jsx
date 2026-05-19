@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import JobCard from "./components/JobCard";
 import FilterBar from "./components/FilterBar";
 import Footer from "./components/Footer";
@@ -154,6 +155,7 @@ function App() {
         )}
       </div>
       <Footer />
+      <Analytics />
     </div>
   );
 }
