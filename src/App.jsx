@@ -18,7 +18,7 @@ function App() {
   const [studentMode, setStudentMode] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/jobs")
+    fetch("https://techjobs-api-rkmq.onrender.com/jobs")
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
